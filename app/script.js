@@ -34,17 +34,17 @@ class App extends React.Component {
   };
 
   startTimer = () => {
-    clearInterval(this.state.timer);
     this.setState({
       status: 'work',
+      timer: setInterval(this.step, 1000),
       time: 10,
     });
   };
 
   stopTimer = () => {
+    clearInterval(this.state.timer);
     this.setState({
       status: 'off',
-      timer: setInterval(this.step, 1000),
       time: 0,
     });
   };
