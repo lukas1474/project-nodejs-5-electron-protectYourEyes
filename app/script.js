@@ -4,33 +4,35 @@ import { render } from 'react-dom';
 class App extends React.Component {
   state = {
     status: 'off',
-    time: 1200,
+    time: 0,
     timer: null,
   };
 
-  formatTime = (time) => {
-    let seconds = Math.floor(time % 60);
-    let minutes = Math.floor(time / 60 % 60);
+  formatTime = (counter) => {
+    let seconds = Math.floor(counter % 60);
+    let minutes = Math.floor(counter / 60 % 60);
 
-    const timer = [minutes, seconds].map(element => `${element + 100}`.substring(1));
-    return timer.join(':');
+    const finalCounter = [minutes, seconds].map(element => `${element + 100}`.substring(1));
+    return finalCounter.join(':');
   };
 
   step = () => {
-    // if (this.state.time === 0 && this.state.status === 'work') {
-    //   this.setState({
-    //     status: 'rest',
-    //     time: 20,
-    //   })
-    // };
-  }
+    this.setState({
+      time: this.state.time - 1,
+    });
+    if (this.state.time === 0 && this.state.status === 'work') {
+      this.setState({
+        status: 'rest',
+        time: 20,
+      });
+    }
+  };
 
   startTimer = () => {
-
     this.setState({
       status: 'work',
       timer: setInterval(this.step, 1000),
-      timer: 1200
+      time: 1200, 
     });
   };
 
