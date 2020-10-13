@@ -1,27 +1,41 @@
 import React from 'react';
 import { render } from 'react-dom';
-// import Homepage from './views/homepage';
-
-// const Homepage = () => {
-//   return (
-//     <div>
-//       <p>According to optometrists in order to save your eyes, you should follow the 20/20/20. It means you should to rest your eyes every 20 minutes for 20 seconds by looking more than 20 feet away.</p>
-//       <p>This app will help you track your time and inform you when it's time to rest.</p>
-//     </div>
-//   );
-// };
 
 class App extends React.Component {
   state = {
-    status: 'off', // off, work, rest
+    status: 'off',
     time: 1200,
     timer: null,
   };
 
-  render() {
-    const { status } = this.state;
+  formatTime = (time) => {
+    let seconds = Math.floor(time % 60);
+    let minutes = Math.floor(time / 60 % 60);
 
-    const formatTime = state.time;
+    const timer = [minutes, seconds].map(element => `${element + 100}`.substring(1));
+    return timer.join(':');
+  };
+
+  step = () => {
+    // if (this.state.time === 0 && this.state.status === 'work') {
+    //   this.setState({
+    //     status: 'rest',
+    //     time: 20,
+    //   })
+    // };
+  }
+
+  startTimer = () => {
+
+    this.setState({
+      status: 'work',
+      timer: setInterval(this.step, 1000),
+      timer: 1200
+    });
+  };
+
+  render() {
+    const { status, time, timer } = this.state;
 
     return (
       <div>
@@ -43,15 +57,15 @@ class App extends React.Component {
         }
         {
           (status !== 'off') &&
-          <div className="timer">18:23</div>
+          <div className="timer">{this.formatTime(time)}</div>
         }
         {
           (status === 'off') &&
-          <button className="btn">Start</button>
+          <button onClick={() => this.startTimer()} className="btn">Start</button>
         }
         {
           (status !== 'off') &&
-          <button className="btn">Stop</button>
+          <button onClick={() => this.stopTimer()} className="btn">Stop</button>
         }
         <button className="btn btn-close">X</button>
       </div>
